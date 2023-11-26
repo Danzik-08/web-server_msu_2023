@@ -26,12 +26,11 @@ def mongoDB_run(i, return_dict):
 if __name__ == '__main__':
     manager = Manager()
     return_dict = manager.dict()
-    p1 = Process(target=mongoDB_run, args=(1, return_dict), daemon=True)
-    p2 = Process(target=mongoDB_run, args=(2, return_dict), daemon=True)
-    p3 = Process(target=mongoDB_run, args=(3, return_dict), daemon=True)
-    p1.start()
-    p2.start()
-    p3.start()
+    processes = []
+    for i in range(3):
+        processes.append(Process(target=mongoDB_run, args=(i + 1, return_dict), daemon=True))
+    for p in processes:
+        p.start()
     stop = input("Input any data for stoppping of MongoDBs: ")
     print(return_dict)
     for i in return_dict:
