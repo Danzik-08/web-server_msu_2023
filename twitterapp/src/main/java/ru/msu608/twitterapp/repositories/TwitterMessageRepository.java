@@ -40,4 +40,59 @@ public class TwitterMessageRepository {
         Query query = new Query().addCriteria(Criteria.where("OwnerUserId").is(userId));
         return mongoTemplate.find(query, TwitterPostMessage.class, COLLECTION_POST_NAME);
     }
+
+    public TwitterAccountMessage saveUser(TwitterAccountMessage user){
+        TwitterAccountMessage newUser = new TwitterAccountMessage(null,
+                user.getRegistrationDate(), user.getUserId(), user.getFullName(),
+                user.getScore(), user.getLastOnline());
+        return mongoTemplate.save(newUser, COLLECTION_USER_NAME);
+    }
+
+    public TwitterPostMessage savePost(TwitterPostMessage post){
+        TwitterPostMessage newPost = new TwitterPostMessage(null, post.getCreationDate(), post.getLikes(),
+                post.getAuthorId(), post.getPostId(), post.getPostType(), post.getText());
+        return mongoTemplate.save(newPost, COLLECTION_POST_NAME);
+    }
+
+    public TwitterAccountMessage findUserBy_id(String _id){
+        return mongoTemplate.findById(_id, TwitterAccountMessage.class, COLLECTION_USER_NAME);
+    }
+
+    public TwitterPostMessage findPostBy_id(String _id){
+        return mongoTemplate.findById(_id, TwitterPostMessage.class, COLLECTION_POST_NAME);
+    }
+    public void deleteUserById(String userId){
+        Query query = new Query().addCriteria(Criteria.where("Id").is(userId));
+        mongoTemplate.remove(query, COLLECTION_USER_NAME);
+    }
+    public void deletePostById(String postId){
+        Query query = new Query().addCriteria(Criteria.where("Id").is(postId));
+        mongoTemplate.remove(query, COLLECTION_POST_NAME);
+    }
+    public TwitterAccountMessage putUser(TwitterAccountMessage user){
+        List<TwitterAccountMessage> existedUser = findUserById(user.getUserId());
+        if(!existedUser.isEmpty()){
+            if(existedUser.get(0).equals(user)) {
+                return existedUser.get(0);
+            }
+            else {
+                deleteUserById(existedUser.get(0).getUserId());
+            }
+        }
+        return saveUser(user);
+    }
+
+    public TwitterPostMessage putPost(TwitterPostMessage post){
+        List<TwitterPostMessage> existingPost = findPostById(post.getPostId());
+        if(!existingPost.isEmpty()){
+            if(existingPost.get(0).equals(post)) {
+                return existingPost.get(0);
+            }
+            else {
+                deletePostById(existingPost.get(0).getPostId());
+            }
+        }
+        return savePost(post);
+    }
+
 }

@@ -5,18 +5,19 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class TwitterPostMessage implements Serializable {
     @BsonId
     public String _id; // Unused
     @Field("CreationDate")
-    public LocalDateTime creationDate;
+    public String creationDate;
     @Field("Score")
-    public Integer likes;
+    public String likes;
     @Field("OwnerUserId")
-    public Integer authorId;
+    public String authorId;
     @Field("Id")
-    public Integer postId;
+    public String postId;
     @Field("PostTypeId")
     public String postType;
     @Field("Body")
@@ -25,9 +26,9 @@ public class TwitterPostMessage implements Serializable {
     public TwitterPostMessage() {
     }
 
-    public TwitterPostMessage(String _id, LocalDateTime creationDate,
-                              Integer likes, Integer authorId,
-                              Integer postId, String postType,
+    public TwitterPostMessage(String _id, String creationDate,
+                              String likes, String authorId,
+                              String postId, String postType,
                               String text) {
         this._id = _id;
         this.creationDate = creationDate;
@@ -46,35 +47,35 @@ public class TwitterPostMessage implements Serializable {
         this._id = _id;
     }
 
-    public LocalDateTime getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(LocalDateTime creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 
-    public Integer getLikes() {
+    public String getLikes() {
         return likes;
     }
 
-    public void setLikes(Integer likes) {
+    public void setLikes(String likes) {
         this.likes = likes;
     }
 
-    public Integer getAuthorId() {
+    public String getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(Integer authorId) {
+    public void setAuthorId(String authorId) {
         this.authorId = authorId;
     }
 
-    public Integer getPostId() {
+    public String getPostId() {
         return postId;
     }
 
-    public void setPostId(Integer postId) {
+    public void setPostId(String postId) {
         this.postId = postId;
     }
 
@@ -92,5 +93,13 @@ public class TwitterPostMessage implements Serializable {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TwitterPostMessage that = (TwitterPostMessage) o;
+        return Objects.equals(creationDate, that.creationDate) && Objects.equals(likes, that.likes) && Objects.equals(authorId, that.authorId) && Objects.equals(postId, that.postId) && Objects.equals(postType, that.postType) && Objects.equals(text, that.text);
     }
 }

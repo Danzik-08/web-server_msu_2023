@@ -4,6 +4,7 @@ import org.bson.codecs.pojo.annotations.BsonId;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class TwitterAccountMessage implements Serializable {
     @BsonId
@@ -11,11 +12,11 @@ public class TwitterAccountMessage implements Serializable {
     @Field("CreationDate")
     public String registrationDate;
     @Field("Id")
-    public Integer userId;
+    public String userId;
     @Field("DisplayName")
     public String fullName;
     @Field("Reputation")
-    public Integer score;
+    public String score;
     @Field("LastAccessDate")
     public String lastOnline;
 
@@ -23,8 +24,8 @@ public class TwitterAccountMessage implements Serializable {
     }
 
     public TwitterAccountMessage(String _id, String registrationDate,
-                                 Integer userId, String fullName,
-                                 Integer score, String lastOnline) {
+                                 String userId, String fullName,
+                                 String score, String lastOnline) {
         this._id = _id;
         this.registrationDate = registrationDate;
         this.userId = userId;
@@ -49,11 +50,11 @@ public class TwitterAccountMessage implements Serializable {
         this.registrationDate = registrationDate;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -65,11 +66,11 @@ public class TwitterAccountMessage implements Serializable {
         this.fullName = fullName;
     }
 
-    public Integer getScore() {
+    public String getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(String score) {
         this.score = score;
     }
 
@@ -79,5 +80,13 @@ public class TwitterAccountMessage implements Serializable {
 
     public void setLastOnline(String lastOnline) {
         this.lastOnline = lastOnline;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TwitterAccountMessage that = (TwitterAccountMessage) o;
+        return Objects.equals(registrationDate, that.registrationDate) && Objects.equals(userId, that.userId) && Objects.equals(fullName, that.fullName) && Objects.equals(score, that.score) && Objects.equals(lastOnline, that.lastOnline);
     }
 }

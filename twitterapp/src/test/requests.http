@@ -1,0 +1,40 @@
+###
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+    "fullName": "Hello from Arsen",
+    "userId": "56",
+    "score": "256"
+}
+
+###
+GET http://localhost:8080/users/by_id/65631f056fd8cc028d760520
+
+###
+POST http://localhost:8080/posts
+Content-Type: application/json
+
+{
+    "text": "Testing post adding",
+    "postType": "1",
+    "postId": "32445346565",
+    "authorId": "56"
+}
+
+###
+GET http://localhost:8080/postsOfUser/56
+
+###
+DELETE http://localhost:8080/posts/32445346565
+
+###
+PUT http://localhost:8080/posts
+Content-Type: application/json
+
+{
+    "text": "Testing new PUT adding",
+    "postType": "1",
+    "postId": "32445346565",
+    "authorId": "56"
+}
