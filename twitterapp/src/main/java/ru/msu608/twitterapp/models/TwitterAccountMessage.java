@@ -89,4 +89,8 @@ public class TwitterAccountMessage implements Serializable {
         TwitterAccountMessage that = (TwitterAccountMessage) o;
         return Objects.equals(registrationDate, that.registrationDate) && Objects.equals(userId, that.userId) && Objects.equals(fullName, that.fullName) && Objects.equals(score, that.score) && Objects.equals(lastOnline, that.lastOnline);
     }
+    @Override
+    public int hashCode() {
+        return Objects.hash(registrationDate, userId, fullName, score, lastOnline);
+    }
 }
