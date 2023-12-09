@@ -37,6 +37,16 @@
             <artifactId>spring-data-mongodb</artifactId>
             <version>4.1.5</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>4.1.5</version>
+        </dependency>
+		<dependency>
+			<groupId>com.hazelcast</groupId>
+			<artifactId>hazelcast-all</artifactId>
+			<version>4.2.8</version>
+		</dependency>
     </dependencies>
 
 	<build>

@@ -1,15 +1,33 @@
 package ru.msu608.twitterapp;
 
+import com.hazelcast.config.*;
+import com.hazelcast.core.Hazelcast;
+import com.hazelcast.core.HazelcastInstance;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+
 @SpringBootApplication
 public class TwitterappApplication {
+	@Bean
+	HazelcastInstance hazelcastInstance() {
+		Config cfg = new Config().addMapConfig(
+				new MapConfig("student")
+						.setEvictionConfig(
+								new EvictionConfig()
+										.setEvictionPolicy(EvictionPolicy.LRU)
+										.setMaxSizePolicy(MaxSizePolicy.PER_NODE)
+										.setSize(1000))
+						.setNearCacheConfig(new NearCacheConfig("student-near-cache"))
+		);
+		return Hazelcast.newHazelcastInstance(cfg);
+	}
 
 	// Инструкция по использованию:
 	// Правой кнопкой мыши по main -> More Run/Debug -> Modify Run Conf
@@ -35,6 +53,7 @@ public class TwitterappApplication {
 		Start_Process.waitFor();
 
 		SpringApplication.run(TwitterappApplication.class, args);
+
 		BufferedReader reader = new BufferedReader(
 				new InputStreamReader(System.in));
 		System.out.print("Input any data to stop application: ");
@@ -47,6 +66,7 @@ public class TwitterappApplication {
 		Process Stop_Process = Stop_Builder.start();
 		Stop_Process.waitFor();
 		System.exit(0);
+
 	}
 
 }

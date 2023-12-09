@@ -1,5 +1,6 @@
 package ru.msu608.twitterapp;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import ru.msu608.twitterapp.models.TwitterAccountMessage;
 import ru.msu608.twitterapp.models.TwitterPostMessage;
@@ -11,7 +12,7 @@ import java.util.List;
 public class TwitterAppController {
     private final TwitterMessageRepository twitterRepository;
 
-    public TwitterAppController(TwitterMessageRepository twitterRepository) {
+    public TwitterAppController(@Qualifier("hazelcastCachedTwitterRepository") TwitterMessageRepository twitterRepository) {
         this.twitterRepository = twitterRepository;
     }
 
