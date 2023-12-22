@@ -5,11 +5,11 @@ import time
 from sys import argv
 
 script, pathToMongoDbBin, pathToLogAndDataFolders = argv
-
-
+# /Users/danzan/mongodb/data
+# /Users/danzan/mongodb/log
 def mongoDB_run(i, return_list):
     with Path('output' + str(i) + '.txt').expanduser().open('wb', 0) as file:
-        process = subprocess.Popen(pathToMongoDbBin + r'mongod.exe --port '
+        process = subprocess.Popen(pathToMongoDbBin + r'mongod --port '
                                     + str(27016 + i) + r' --logpath ' + pathToLogAndDataFolders + 
                                     r'log\\n' + str(i) + r'\\mongod.log --dbpath ' + 
                                     pathToLogAndDataFolders + r'data\\n' 

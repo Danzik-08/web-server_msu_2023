@@ -3,18 +3,31 @@ package ru.msu608.twitterapp;
 import com.hazelcast.config.*;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
+import org.apache.http.HttpHost;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 
 @SpringBootApplication
 public class TwitterappApplication {
+
+
+	@Bean
+	public RestHighLevelClient elasticsearchClient(@Value("${elasticsearch.hosts}") String elasticHosts) {
+		String[] hosts = elasticHosts.split(",");
+		HttpHost[] httpHosts = Arrays.stream(hosts)
+				.map(HttpHost::create).toArray(HttpHost[]::new);
+		return new RestHighLevelClient(RestClient.builder(httpHosts));
+	}
+
 	@Bean
 	HazelcastInstance hazelcastInstance() {
 		Config cfg = new Config().addMapConfig(

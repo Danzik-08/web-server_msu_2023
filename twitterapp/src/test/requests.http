@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/users/by_id/65631f056fd8cc028d760520
+GET po/users/by_id/65631f056fd8cc028d760520
 
 ###
 POST http://localhost:8080/posts
